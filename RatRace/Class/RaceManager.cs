@@ -50,7 +50,7 @@ namespace RatRace.Class
         //Metode til at skabe en spiller
         public void CreatePlayer(Player player)
         {
-            string Name = "wdwd";
+            string PlayerName;
             int Money = RNG.Range(100, 1000);
         }
     }

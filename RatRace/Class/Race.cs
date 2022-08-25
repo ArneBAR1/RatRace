@@ -17,7 +17,7 @@ namespace RatRace.Class
         public void ConductRace()
         {
             Console.WriteLine("And the race is starting! Look at them go");
-            MoveRat();
+            //MoveRat();
         }
         public void GetWinner()
         {
