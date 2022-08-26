@@ -12,6 +12,11 @@ namespace RatRace.Class
         private int position;
         public int Position = 0;
 
+        public Rat(string name)
+        {
+            name = Name;
+        }
+
         public void ResetRat()
         {
             //Go back to start

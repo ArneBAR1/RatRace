@@ -11,5 +11,11 @@ namespace RatRace.Class
         public string Name;
         public int Money;
         List<Bet> bets = new List<Bet>() { };
+
+        public Player(string name, int money)
+        {
+            name = Name;
+            money = Money;
+        }
     }
 }

@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace RatRace.Class
 {
-    class Track
+    public class Track
     {
         public string Name;
         public int TrackLength;
+        public Track(string name, int trackLength)
+        {
+            trackLength = TrackLength;
+            name = Name;
+        }
     }
 }

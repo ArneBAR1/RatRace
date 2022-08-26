@@ -8,10 +8,15 @@ namespace RatRace.Class
 {
     class Bet
     {
-        private int money;
-        private Player player;
-        private Race race;
-        private Rat rat;
+        private int Money;
+        private Player Player;
+        private Race Race;
+        private Rat Rat;
+
+        public Bet(Race race, Rat rat, Player player, int money)
+        {
+            
+        }
 
         public void PayWinnings()
         {

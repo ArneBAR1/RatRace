@@ -14,10 +14,18 @@ namespace RatRace.Class
         private Rat Winner;
         private string log;
 
+        public Race(int raceID, List<Rat> rats, Track track)
+        {
+            raceID = RaceID;
+            rats = Rats;
+            track = RaceTrack;
+        }
+
         public void ConductRace()
         {
-            Console.WriteLine("And the race is starting! Look at them go");
-            //MoveRat();
+            Console.WriteLine("And the race has started! Look at them go");
+            //for hver rotte, flyt x felter. Forsæt indtil alle er i mål
+            //Hold styr på rækkefølgen rotterne kommer i mål
         }
         public void GetWinner()
         {
@@ -26,7 +34,7 @@ namespace RatRace.Class
         }
         public string GetRaceReport()
         {
-            
+            return "";
         }
         private void logRace()
         {
