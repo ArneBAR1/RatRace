@@ -24,21 +24,8 @@ namespace RatRace.Class
         //Metode til at skabe en bane
         public Track CreateTrack(string name, int tracklength)
         {
-            int NumberTrack = RNG.Range(20, 51);
-            tracklength = NumberTrack;
+
             Tracks.Add(new Track(name, tracklength));
-            if (NumberTrack >= 20 && NumberTrack < 30)
-            {
-                name = "Small Track";
-            }
-            if (NumberTrack >= 30 && NumberTrack < 40)
-            {
-                name = "Medium Track";
-            }
-            if (NumberTrack >= 40 && NumberTrack <= 50)
-            {
-                name = "Large Track";
-            }
             return new Track(name, tracklength);
         }
         //Metode til at afholde racet
@@ -64,14 +51,8 @@ namespace RatRace.Class
         //Metode til at skabe en rotte
 
         public Rat CreateRat(string name)
-        {
-            int NumberRats = RNG.Range(2, 11);
-            string[] names = { "Lui", "Palle", "Humus", "Ost", "Paladin", "Bard", "Kartoffel", "Ratatouille", "Flæskesteg", "BrunSovs", "Bluey", "Rory" };
-            for (int i = 0; i <= NumberRats; i++)
-            {
-                name = names[i];
-                Rats.Add(new Rat(name));
-            }
+        {  
+            Rats.Add(new Rat(name));
             return new Rat(name);
         }
         //Metode til at skabe en spiller
@@ -95,8 +76,6 @@ namespace RatRace.Class
         public Player CreatePlayer(string name, int money)
         {
             Players.Add(new Player(name, money));
-
-            CreatePlayer();
             return new Player(name, money);
             //Trigger bet placing
         }

@@ -13,9 +13,13 @@ namespace RatRace.Class
         private Race Race;
         private Rat Rat;
 
+        //Constructor
         public Bet(Race race, Rat rat, Player player, int money)
         {
-            
+            Race = race;
+            Rat = rat;
+            Player = player;
+            Money = money;
         }
 
         public void PayWinnings()

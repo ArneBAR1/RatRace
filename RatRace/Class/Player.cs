@@ -10,7 +10,7 @@ namespace RatRace.Class
     {
         public string Name;
         public int Money;
-        List<Bet> bets = new List<Bet>() { };
+        List<Bet> bets;
 
         public Player(string name, int money)
         {

@@ -10,7 +10,11 @@ namespace RatRace.Class
     {
         public string Name;
         private int position;
-        public int Position = 0;
+        public int Position 
+        { 
+            get { return position; }
+            set { position = value; }
+        }
 
         public Rat(string name)
         {
