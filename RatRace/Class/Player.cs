@@ -14,8 +14,8 @@ namespace RatRace.Class
 
         public Player(string name, int money)
         {
-            name = Name;
-            money = Money;
+            Name = name;
+            Money = money;
         }
     }
 }

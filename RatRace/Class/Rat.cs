@@ -10,6 +10,7 @@ namespace RatRace.Class
     {
         public string Name;
         private int position;
+        public int SpacesMoved;
         public int Position 
         { 
             get { return position; }
@@ -18,7 +19,7 @@ namespace RatRace.Class
 
         public Rat(string name)
         {
-            name = Name;
+            Name = name;
         }
 
         public void ResetRat()
@@ -33,7 +34,7 @@ namespace RatRace.Class
         {
             
             //Move x amount of spaces based on a die
-            int SpacesMoved = RNG.Range(1, 7);
+            SpacesMoved = RNG.Range(1, 7);
             Position += SpacesMoved;
 
             return Position;

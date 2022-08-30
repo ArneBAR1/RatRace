@@ -9,53 +9,66 @@ namespace RatRace.Class
 {
     class Race
     {
-        public int RaceID = 1;
+        public int RaceID;
         public List<Rat> Rats;
         public Track RaceTrack;
         private Rat Winner;
-        private string log;
-        public List<Rat> Order = new List<Rat>;
-
-        public Race(int raceID, List<Rat> rats, Track track)
+        public Rat winner
         {
-            raceID = RaceID;
-            rats = Rats;
-            track = RaceTrack;
+            get { return Winner; }
+            set { Winner = value; }
+        }
+        private string log;
+        //public List<Rat> Order = new List<Rat>();
+
+       public Race(int raceID, List<Rat> rats, Track track)
+        {
+            RaceID = raceID;
+            Rats = rats;
+            RaceTrack = track;
         }
 
         public void ConductRace()
         {
             Console.WriteLine("And the race has started! Look at them go");
             //for hver rotte, flyt x felter
-            while (Winner.Position < RaceTrack.TrackLength)
+
+            bool winnerFound =  false;
+            int crntTurn = 1;
+            while (!winnerFound)
             {
-                for (int i = 0; i < Rats.Count; i++)
+                foreach (Rat item in Rats)
                 {
-                    Winner.MoveRat();
-                    if (Winner.Position >= RaceTrack.TrackLength)
+                    item.MoveRat();
+                    Console.WriteLine("Turn " + crntTurn+": " + item.Name+" has moved " + item.SpacesMoved + " spaces");
+                    log += ("Turn " + crntTurn + ": " + item.Name + " has moved " + item.SpacesMoved + " spaces") + "\n";
+                }
+                foreach (Rat item in Rats)
+                {
+                    if (item.Position>= RaceTrack.TrackLength)
                     {
-                        Order.Add(new Rat(name));
+                        winnerFound  = true;
+                        Winner = item;
                     }
                 }
+
+                crntTurn++;
             }
-            //Hold styr på rækkefølgen rotterne kommer i mål
+            
         }
         public void GetWinner()
         {
+            Console.Clear();
             Console.WriteLine("And the winner of this race is...");
-            Console.WriteLine(Order[0]);
+            Console.WriteLine(Winner.Name);
+            //Console.WriteLine(Order[0]);
             Console.WriteLine("Whoever betted on this rat, sure is lucky today");
         }
         public string GetRaceReport()
         {
-            int place = 1;
-            Console.WriteLine("What a wonderful race! Let's see the full list of when the rats passed the finish line");
-            for (int i = 0; i < Order.Count; i++)
-            {
-                Console.WriteLine("\nIn" + place + " place" + Order[i]);
-                place++;
-            }
-            return "";
+            Console.WriteLine("What a wonderful race!");
+            string Rapport = log;
+            return Rapport;
         }
         private void logRace()
         {
@@ -66,3 +79,4 @@ namespace RatRace.Class
         }
     }
 }
+

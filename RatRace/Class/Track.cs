@@ -12,8 +12,8 @@ namespace RatRace.Class
         public int TrackLength;
         public Track(string name, int trackLength)
         {
-            trackLength = TrackLength;
-            name = Name;
+            TrackLength = trackLength;
+            Name = name;
         }
     }
 }

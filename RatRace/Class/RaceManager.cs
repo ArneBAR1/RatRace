@@ -14,19 +14,25 @@ namespace RatRace.Class
         public List<Rat> Rats = new List<Rat>() { };
         public List<Track> Tracks = new List<Track>() { };
         public Bookmaker bookmaker = new Bookmaker();
+        public int RaceID;
 
         //Metode til at skabe et race
         public Race CreateRace(int RaceID, List<Rat> rats, Track track)
         {
             RaceID = RNG.Range(1, 99999999);
-            return new Race(RaceID, rats, track);
+            Console.WriteLine("This will be race number " + RaceID);
+
+            Race race = new Race(RaceID, rats, track);
+            Races.Add(race);
+
+
+            return race;
         }
         //Metode til at skabe en bane
         public Track CreateTrack(string name, int tracklength)
         {
-
             Tracks.Add(new Track(name, tracklength));
-            return new Track(name, tracklength);
+            return Tracks[0];
         }
         //Metode til at afholde racet
         public void ConductRace(Race race)
@@ -42,11 +48,14 @@ namespace RatRace.Class
             Console.WriteLine("GOOOOO!");
             Console.ReadLine();
             race.ConductRace();
+            
         }
         //Metode til at se racet
         public string ViewRaceRapport(Race race)
         {
-            return "";
+            
+            
+            return race.GetRaceReport();
         }
         //Metode til at skabe en rotte
 
