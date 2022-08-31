@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RatRace.Terrain;
+using RatRace.Class;
 
-namespace RatRace.Class
+namespace RatRace.Terrain
 {
-    public class Track
+    class Beach:Track
     {
-        public string Name;
-        public int TrackLength;
-        public string Terrain;
-        public Track(string name, int trackLength)
+        public Beach(string name, int trackLength):base(name, trackLength)
         {
             TrackLength = trackLength;
             Name = name;
-
+            Terrain = "Sand";
+            //+ speed for beach rats
         }
     }
 }

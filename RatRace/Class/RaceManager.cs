@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RatRace.Rats;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +30,9 @@ namespace RatRace.Class
             return race;
         }
         //Metode til at skabe en bane
-        public Track CreateTrack(string name, int tracklength)
+        public Track CreateTrack(string trackname, int length)
         {
-            Tracks.Add(new Track(name, tracklength));
+            Tracks.Add(new Track(trackname, length));
             return Tracks[0];
         }
         //Metode til at afholde racet
@@ -53,16 +54,30 @@ namespace RatRace.Class
         //Metode til at se racet
         public string ViewRaceRapport(Race race)
         {
-            
-            
             return race.GetRaceReport();
         }
         //Metode til at skabe en rotte
 
         public Rat CreateRat(string name)
-        {  
-            Rats.Add(new Rat(name));
-            return new Rat(name);
+        {
+            string type = "";
+            int whichType = RNG.Range(1,  4);
+            Rat TypeRat = new Rat("Default", "Default");
+
+            switch (whichType)
+            {
+                case 1:
+                    TypeRat = new Grass_Rat(name, "Grass");
+                    break;
+                case 2:
+                    TypeRat = new Beach_Rat(name, "Beach");
+                    break;
+                case 3:
+                    TypeRat = new Forrest_Rat(name, "Forrest");
+                    break;
+            }
+            Rats.Add(TypeRat);
+            return TypeRat;
         }
         //Metode til at skabe en spiller
         public Player CreatePlayer()

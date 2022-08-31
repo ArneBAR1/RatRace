@@ -11,15 +11,19 @@ namespace RatRace.Class
         public string Name;
         private int position;
         public int SpacesMoved;
+        public Item item;
+        public int speed = 0;
+        public string Type;
         public int Position 
         { 
             get { return position; }
             set { position = value; }
         }
 
-        public Rat(string name)
+        public Rat(string name, string type)
         {
             Name = name;
+            Type = type;
         }
 
         public void ResetRat()
@@ -30,11 +34,10 @@ namespace RatRace.Class
                 Position = 0;
             }
         }
-        public int MoveRat()
+        public virtual int MoveRat(Track track)
         {
-            
             //Move x amount of spaces based on a die
-            SpacesMoved = RNG.Range(1, 7);
+            SpacesMoved += speed;
             Position += SpacesMoved;
 
             return Position;

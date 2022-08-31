@@ -30,24 +30,31 @@ namespace RatRace.Class
 
         public void ConductRace()
         {
+            
             Console.WriteLine("And the race has started! Look at them go");
             //for hver rotte, flyt x felter
 
             bool winnerFound =  false;
             int crntTurn = 1;
+            log += "Race number: " + RaceID;
+            
             while (!winnerFound)
             {
                 foreach (Rat item in Rats)
                 {
-                    item.MoveRat();
+                    item.MoveRat(RaceTrack);
                     Console.WriteLine("Turn " + crntTurn+": " + item.Name+" has moved " + item.SpacesMoved + " spaces");
-                    log += ("Turn " + crntTurn + ": " + item.Name + " has moved " + item.SpacesMoved + " spaces") + "\n";
+                    log += ("\nTurn " + crntTurn + ": " + item.Name + " has moved " + item.SpacesMoved + " spaces \nThis rat has moved in total: " + item.Position);
+                    
                 }
+                int bestPositioneringIHeleDasWelt = 0;
+
                 foreach (Rat item in Rats)
                 {
-                    if (item.Position>= RaceTrack.TrackLength)
+                    if (item.Position >= RaceTrack.TrackLength && item.Position > bestPositioneringIHeleDasWelt)
                     {
-                        winnerFound  = true;
+                        winnerFound = true;
+                        bestPositioneringIHeleDasWelt = item.Position;
                         Winner = item;
                     }
                 }
@@ -68,6 +75,8 @@ namespace RatRace.Class
         {
             Console.WriteLine("What a wonderful race!");
             string Rapport = log;
+            Console.WriteLine(Rapport);
+            logRace();
             return Rapport;
         }
         private void logRace()
@@ -75,7 +84,7 @@ namespace RatRace.Class
             string directory = Directory.GetCurrentDirectory();
             string path = System.IO.Path.Combine(directory + "\\RaceLog.txt");
 
-            File.WriteAllText("RaceLog.txt", "Inge left the server");
+            File.WriteAllText("RaceLog.txt", log);
         }
     }
 }

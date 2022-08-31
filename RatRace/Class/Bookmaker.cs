@@ -31,22 +31,7 @@ namespace RatRace.Class
         {
             bet.PayWinnings();
 
-
         }
-        public void PayOutWinningsForRace(Race race)
-        {
-
-            foreach (Bet item in Bets)
-            {
-                if (item.Race == race)
-                {
-                    item.PayWinnings();
-                }
-            }
-
-
-        }
-
 
     }
 }

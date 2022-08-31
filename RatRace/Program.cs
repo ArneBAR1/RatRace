@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using RatRace.Class;
+using RatRace.Terrain;
+using RatRace.Rats;
 
 namespace RatRace
 {
@@ -8,10 +10,11 @@ namespace RatRace
     {
         static void Main(string[] args)
         {
+            
             Console.WriteLine("Welcome to the rat race!");
             Console.WriteLine("Bet on rats and earn rewards! If you dare");
-            RaceManager raceManager = new RaceManager();
             Console.WriteLine("But first, what is your name?");
+            RaceManager raceManager = new RaceManager();
             string PlayerName = Console.ReadLine();
             int money = RNG.Range(100, 1000);
             raceManager.CreatePlayer(PlayerName, money);
@@ -20,6 +23,8 @@ namespace RatRace
             //Start over from here?
             while (raceManager.Players[0].Money > 0)
             {
+                raceManager.Rats.Clear();
+                raceManager.bookmaker.Bets.Clear();
                 Console.WriteLine("Your balance: " + raceManager.Players[0].Money);
                 Console.WriteLine("Here's the line up for the next race");
                 Console.WriteLine("The runners are:");
@@ -31,28 +36,31 @@ namespace RatRace
                     string RatName = names[i];
                     raceManager.CreateRat(RatName);
 
-                    Console.WriteLine(RatName);
+                    Console.WriteLine(RatName + "\nWho is a " + raceManager.Rats[i].Type + " rat");
                 }
                 string TrackName = "";
                 int NumberTrack = RNG.Range(20, 51);
                 int tracklength = NumberTrack;
-                if (NumberTrack >= 20 && NumberTrack < 30)
+                int whichTrack = RNG.Range(1, 4);
+                switch (whichTrack)
                 {
-                    TrackName = "Small Track";
+                    case 1:
+                        Console.WriteLine("The track for this race is a plain grass field! \nPlain rats will have an advantage");
+                        TrackName = "Plain grass field";
+                        break;
+                    case 2:
+                        Console.WriteLine("The track for this race is a forrest! \nForrets rats will have an advantage");
+                        TrackName = "Forrest";
+                        break;
+                    case 3:
+                        Console.WriteLine("The track for this race is a sand beach! \nBeach rats will have an advantage");
+                        TrackName = "Beach";
+                        break;
                 }
-                if (NumberTrack >= 30 && NumberTrack < 40)
-                {
-                    TrackName = "Medium Track";
-                }
-                if (NumberTrack >= 40 && NumberTrack <= 50)
-                {
-                    TrackName = "Large Track";
-                }
-            
+
                 raceManager.CreateTrack(TrackName, tracklength);
 
                 raceManager.CreateRace(raceManager.RaceID, raceManager.Rats, raceManager.Tracks[0]);
-                Console.WriteLine("And the track is " + TrackName);
                 Console.ReadLine();
                 Console.Clear();
                 string ratname = "";
@@ -64,9 +72,10 @@ namespace RatRace
                 {
                     case 1:
                         Console.WriteLine("Alright, which rat do you want to bet on?");
+                        Console.WriteLine("As a reminder, the track is a " + TrackName);
                         for (int i = 0; i < raceManager.Rats.Count; i++)
                         {
-                            Console.WriteLine(raceManager.Rats[i].Name);
+                            Console.WriteLine(raceManager.Rats[i].Name + " The " + raceManager.Rats[i].Type + " rat");
                         }
                         ratname = Console.ReadLine();
                         for (int j = 0; j < raceManager.Rats.Count; j++)
@@ -74,7 +83,7 @@ namespace RatRace
                             if (ratname == raceManager.Rats[j].Name)
                             {
                                 rat = raceManager.Rats[j];
-                                Console.WriteLine("You've chosen " + ratname);
+                                Console.WriteLine("You've chosen " + ratname + " The " + raceManager.Rats[j].Type + " rat");
                             }
                         }
                         Console.WriteLine("Your balance: " + raceManager.Players[0].Money);
@@ -87,6 +96,21 @@ namespace RatRace
                         }
                         raceManager.Players[0].Money -= money;
                         raceManager.bookmaker.PlaceBet(raceManager.Races[0], rat, raceManager.Players[0], money);
+                        Console.Clear();
+                        Console.WriteLine("Do you wish to purchance some speed shoes for your rat? Only 200? \n1: Yes \n2: No");
+                        int ChooseItem = int.Parse(Console.ReadLine());
+
+                        switch (ChooseItem)
+                        {
+                            case 1:
+                                Console.WriteLine("Wise choice! I'll make sure your rat equips the shoes");
+                                raceManager.Players[0].Money -= 200;
+                                rat.item.Equip(rat);
+                                break;
+                            case 2:
+                                Console.WriteLine("Your choice, good luck");
+                                break;
+                        }
                         break;
                     case 2:
                         Console.WriteLine("Alright, your choice");
@@ -98,8 +122,11 @@ namespace RatRace
                 Console.WriteLine("The race is now over and we have our winner! Ready to find out who it was?");
                 Console.ReadLine();
                 raceManager.Races[0].GetWinner();
-                raceManager.bookmaker.Bets[0].PayWinnings();
-                Console.WriteLine("your balance after the race: " + raceManager.Players[0].Money);
+                if (raceManager.bookmaker.Bets.Count != 0)
+                {
+                    raceManager.bookmaker.Bets[0].PayWinnings();
+                    Console.WriteLine("your balance after the race: " + raceManager.Players[0].Money);
+                }
                 Console.ReadLine();
                 Console.Clear();
                 Console.WriteLine("Do you whis to see the report of the race? \n 1: Yes \n 2: No");
@@ -113,7 +140,9 @@ namespace RatRace
                         Console.WriteLine("No problem");
                         break;
                 }
+                Console.ReadLine();
                 Console.Clear();
+                rat.item.Unequip(rat);
             }
         }
     }
