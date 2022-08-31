@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using RatRace.Class;
 using RatRace.Terrain;
 using RatRace.Rats;
+using RatRace.Items;
 
 namespace RatRace
 {
@@ -17,6 +18,7 @@ namespace RatRace
             RaceManager raceManager = new RaceManager();
             string PlayerName = Console.ReadLine();
             int money = RNG.Range(100, 1000);
+            SpeedShoes speedshoes = new SpeedShoes();
             raceManager.CreatePlayer(PlayerName, money);
             raceManager.CreatePlayer();
             Console.WriteLine("Great! Welcome " + PlayerName);
@@ -105,7 +107,7 @@ namespace RatRace
                             case 1:
                                 Console.WriteLine("Wise choice! I'll make sure your rat equips the shoes");
                                 raceManager.Players[0].Money -= 200;
-                                rat.item.Equip(rat);
+                                speedshoes.Equip(rat);
                                 break;
                             case 2:
                                 Console.WriteLine("Your choice, good luck");
