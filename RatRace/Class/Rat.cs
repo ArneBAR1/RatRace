@@ -11,7 +11,7 @@ namespace RatRace.Class
         public string Name;
         private int position;
         public int SpacesMoved;
-        public Item item;
+        public IItem item;
         public int speed = 0;
         public string Type;
         public int Position 

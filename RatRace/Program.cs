@@ -11,12 +11,18 @@ namespace RatRace
     {
         static void Main(string[] args)
         {
-            
+
             Console.WriteLine("Welcome to the rat race!");
             Console.WriteLine("Bet on rats and earn rewards! If you dare");
             Console.WriteLine("But first, what is your name?");
             RaceManager raceManager = new RaceManager();
             string PlayerName = Console.ReadLine();
+            while (PlayerName == "")
+            {
+                Console.WriteLine("You didn't enter your name, please try again");
+                PlayerName = Console.ReadLine();
+
+            }
             int money = RNG.Range(100, 1000);
             SpeedShoes speedshoes = new SpeedShoes();
             raceManager.CreatePlayer(PlayerName, money);
@@ -79,18 +85,40 @@ namespace RatRace
                         {
                             Console.WriteLine(raceManager.Rats[i].Name + " The " + raceManager.Rats[i].Type + " rat");
                         }
-                        ratname = Console.ReadLine();
-                        for (int j = 0; j < raceManager.Rats.Count; j++)
+                        bool ratFound = false;
+                        while (!ratFound)
                         {
-                            if (ratname == raceManager.Rats[j].Name)
+
+                            try
                             {
-                                rat = raceManager.Rats[j];
-                                Console.WriteLine("You've chosen " + ratname + " The " + raceManager.Rats[j].Type + " rat");
+                                Console.WriteLine("Type the name of the rat you will bet on:");
+                                ratname = Console.ReadLine();
+                                for (int j = 0; j < raceManager.Rats.Count; j++)
+                                {
+                                    if (ratname == raceManager.Rats[j].Name)
+                                    {
+                                        rat = raceManager.Rats[j];
+                                        Console.WriteLine("You've chosen " + ratname + " The " + raceManager.Rats[j].Type + " rat");
+                                        ratFound = true;
+                                    }
+
+                                }
                             }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Error yyou are of all the bad spellings!");
+                            }
+
                         }
+
+
                         Console.WriteLine("Your balance: " + raceManager.Players[0].Money);
                         Console.WriteLine("And how much do you want to bet? Remember, you get 2x back if you win");
-                        money = int.Parse(Console.ReadLine());
+                        while (!int.TryParse(Console.ReadLine(), out money))
+                        {
+                            Console.WriteLine("Incorret format try again");
+                        }
+
                         while (money > raceManager.Players[0].Money)
                         {
                             Console.WriteLine("That's more than you have! That won't do, try again");
@@ -99,26 +127,29 @@ namespace RatRace
                         raceManager.Players[0].Money -= money;
                         raceManager.bookmaker.PlaceBet(raceManager.Races[0], rat, raceManager.Players[0], money);
                         Console.Clear();
-                        Console.WriteLine("Do you wish to purchance some speed shoes for your rat? Only 200? \n1: Yes \n2: No");
-                        int ChooseItem = int.Parse(Console.ReadLine());
-
-                        switch (ChooseItem)
+                        if (raceManager.Players[0].Money >= 200)
                         {
-                            case 1:
-                                Console.WriteLine("Wise choice! I'll make sure your rat equips the shoes");
-                                raceManager.Players[0].Money -= 200;
-                                speedshoes.Equip(rat);
-                                break;
-                            case 2:
-                                Console.WriteLine("Your choice, good luck");
-                                break;
+                            Console.WriteLine("Do you wish to purchance some speed shoes for your rat? Only 200? \n1: Yes \n2: No");
+                            int ChooseItem = int.Parse(Console.ReadLine());
+
+                            switch (ChooseItem)
+                            {
+                                case 1:
+                                    Console.WriteLine("Wise choice! I'll make sure your rat equips the shoes");
+                                    raceManager.Players[0].Money -= 200;
+                                    speedshoes.Equip(rat);
+                                    break;
+                                case 2:
+                                    Console.WriteLine("Your choice, good luck");
+                                    break;
+                            }
                         }
                         break;
                     case 2:
                         Console.WriteLine("Alright, your choice");
                         break;
-
                 }
+                Console.ReadLine();
                 Console.Clear();
                 raceManager.ConductRace(raceManager.Races[0]);
                 Console.WriteLine("The race is now over and we have our winner! Ready to find out who it was?");
